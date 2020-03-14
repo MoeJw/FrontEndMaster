@@ -1,18 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Pet from "./Pet";
+import Results from "./Results";
+import Details from "./Details";
+import pf from "petfinder-client";
+import "./style.css";
+import { Router, Link } from "@reach/router";
+const petfinder = pf({
+  key: process.env.API_KEY,
+  secret: process.env.API_SECRET
+});
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Adopt Me!</h1>
-        <Pet name="Luna" animal="dog" breed="Havanese" />
-        <Pet name="Pepper" animal="bird" breed="Cockatiel" />
-        <Pet name="Doink" animal="cat" breed="Mix" />
+        <Link to={"/"}>
+          <h1>Adopt Me!</h1>
+        </Link>
+        <Router>
+          <Results path="/" />
+          <Details path="/details/:id" />
+        </Router>
       </div>
     );
   }
 }
 
-ReactDOM.render(React.createElement(App), document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
